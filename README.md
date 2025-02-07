@@ -1,1 +1,1 @@
-tienda: react + node + mysql
+tienda react + node + mysql
