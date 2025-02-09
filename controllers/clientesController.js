@@ -9,10 +9,25 @@ const getAllClientes = async (req, res) => {
   }
 };
 
+
+const getOneCliente = async (req, res) => {
+  const { id } = req.params;
+  try{
+    const result = await clienteModel.getOne(id);
+    res.status(200).json(result);
+  }catch (err){
+    res.status(500).json({message: err.message})
+  }
+};
+
 const newCliente = async (req, res) => {
   const { nombre, apellido, email, telefono } = req.body;
-  const nuevoCliente = await clienteModel.create(nombre, apellido, email, telefono);
-  res.status(201).json(nuevoCliente);
+  try{
+    const nuevoCliente = await clienteModel.create(nombre, apellido, email, telefono);
+    res.status(201).json(nuevoCliente);
+  }catch (err){
+    res.status(500).json({message: err.message})
+  }
 };
 
 const updateClienteForId = async (req, res) => {
@@ -36,9 +51,9 @@ const deleteClienteForId = async (req, res) => {
   }
 };
 
-
 module.exports = {
   getAllClientes,
+  getOneCliente,
   newCliente,
   updateClienteForId,
   deleteClienteForId

@@ -1,35 +1,60 @@
 const productoModel = require('../models/productoModel');
 
-const getAllproductos = (req, res, next) => {
-    res.json({message: "Obteniendo todos los productos"});
+const getAllProductos = async (req, res) => {
+  try {
+    const productos = await productoModel.getAll();
+    res.status(200).json(productos);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 };
 
-const newproducto = (req, res, next) => {
-    res.json({message: "POST new producto"});
+
+const getOneProducto = async (req, res) => {
+  const { id } = req.params;
+  try{
+    const result = await productoModel.getOne(id);
+    res.status(200).json(result);
+  }catch (err){
+    res.status(500).json({message: err.message})
+  }
 };
 
-const deleteAllproducto = (req, res, next) => {
-    res.json({message: "DELETE all producto"});
+const newProducto = async (req, res) => {
+  const { descripcion, peso } = req.body;
+  try{
+    const nuevoProducto = await productoModel.create(descripcion, peso);
+    res.status(201).json(nuevoProducto);
+  }catch (err){
+    res.status(500).json({message: err.message})
+  }
 };
 
-const getOneproducto = (req, res, next) => {
-    res.json({message: "GET 1 producto"});
+const updateProductoForId = async (req, res) => {
+  const { id } = req.params;
+  const { descripcion, peso } = req.body;
+  try{
+    const result = await productoModel.updateForId(id, descripcion, peso);
+    res.status(200).json(result);
+  }catch (err){
+    res.status(500).json({message: err.message})
+  }
 };
 
-const updateproducto = (req, res, next) => {
-    res.json({message: "GET 1 producto"});
+const deleteProductoForId = async (req, res) => {
+  const { id } = req.params;
+  try{
+    const result = await productoModel.deleteForId(id);
+    res.status(200).json(result);
+  }catch (err){
+    res.status(500).json({message: err.message})
+  }
 };
-
-const deleteOneproducto = (req, res, next) => {
-    res.json({message: "DELETE 1 producto"});
-};
-
 
 module.exports = {
-    getAllproductos, 
-    newproducto,
-    deleteAllproducto,
-    updateproducto,
-    getOneproducto,
-    deleteOneproducto
+  getAllProductos,
+  getOneProducto,
+  newProducto,
+  updateProductoForId,
+  deleteProductoForId
 };
