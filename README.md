@@ -1,1 +1,5 @@
-tienda react + node + mysql
+Descripción:
+    tienda react + node + mysql
+Instalar:
+    npm install --save mysql2
+
