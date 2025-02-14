@@ -2,7 +2,7 @@ const pool = require('../lib/db');
 
 const getAll = async () => {
   try {
-    const [result] = await pool.execute('SELECT id_producto, descripcion, peso FROM productos');
+    const [result] = await pool.execute('SELECT id_product, description, brand, model, sku, batch, launch_date, discount, register_date, weight, id_supplier FROM productos');
     return result;
   } catch (err) {
     throw new Error('Error al obtener productos: ' + err.message);
